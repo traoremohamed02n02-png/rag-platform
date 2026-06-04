@@ -76,13 +76,14 @@ jobs:
           name: dependency-check-report
           path: target/dependency-check-report.html
 
-      # ==========================================
+  # ==========================================
       # 8. Construction Docker
       # ==========================================
+      - name: Package before Docker
+        run: mvn package -DskipTests
+
       - name: Build Docker Image
         run: docker build -t rag-platform:latest .
-
-      # ==========================================
       # 9. Scan de vulnérabilités Docker
       # ==========================================
       - name: Run Trivy Scan
