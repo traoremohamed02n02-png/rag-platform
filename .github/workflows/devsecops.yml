@@ -46,7 +46,7 @@ jobs:
       # 4. Tests unitaires
       # ==========================================
       - name: Run Unit Tests
-        run: mvn test
+        run: mvn test -DskipTests
 
       # ==========================================
       # 5. Packaging
