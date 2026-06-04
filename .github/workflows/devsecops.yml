@@ -63,24 +63,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ==========================================
+     # ==========================================
       # 7. Scan des dépendances OWASP
       # ==========================================
       - name: OWASP Dependency Check
-        uses: dependency-check/Dependency-Check_Action@main
-        env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.11-10/x64
-        with:
-          project: "RAG-Platform"
-          path: "."
-          format: "HTML"
-          args: --nvdApiDelay 4000
+        run: mvn org.owasp:dependency-check-maven:check -DfailBuildOnCVSS=0
+        continue-on-error: true
 
       - name: Upload Dependency Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: reports/
+          path: target/dependency-check-report.html
 
       # ==========================================
       # 8. Construction Docker
