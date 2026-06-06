@@ -16,27 +16,11 @@
             transition: all 0.2s;
             margin-bottom: 24px;
         }
-        .upload-zone:hover {
-            border-color: #3b82f6;
-            background: #eff6ff;
-        }
-        .upload-zone i {
-            font-size: 40px;
-            color: #93c5fd;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .upload-zone h3 {
-            font-size: 15px;
-            font-weight: 600;
-            color: #1e3a5f;
-            margin-bottom: 6px;
-        }
-        .upload-zone p {
-            font-size: 13px;
-            color: #64748b;
-        }
-        .upload-zone .btn-upload-trigger {
+        .upload-zone:hover { border-color: #3b82f6; background: #eff6ff; }
+        .upload-zone i { font-size: 40px; color: #93c5fd; margin-bottom: 12px; display: block; }
+        .upload-zone h3 { font-size: 15px; font-weight: 600; color: #1e3a5f; margin-bottom: 6px; }
+        .upload-zone p { font-size: 13px; color: #64748b; }
+        .btn-upload-trigger {
             display: inline-block;
             margin-top: 14px;
             background: #1e3a5f;
@@ -48,12 +32,7 @@
             cursor: pointer;
             border: none;
         }
-        .filters-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
+        .filters-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
         .filter-tag {
             padding: 6px 14px;
             border-radius: 20px;
@@ -65,11 +44,7 @@
             background: #fff;
             transition: all 0.15s;
         }
-        .filter-tag.active {
-            background: #1e3a5f;
-            color: #fff;
-            border-color: #1e3a5f;
-        }
+        .filter-tag.active { background: #1e3a5f; color: #fff; border-color: #1e3a5f; }
         .search-input {
             margin-left: auto;
             display: flex;
@@ -79,23 +54,9 @@
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 7px 12px;
-            font-size: 13px;
-            color: #64748b;
         }
-        .search-input input {
-            border: none;
-            outline: none;
-            font-size: 13px;
-            color: #0f172a;
-            background: transparent;
-            width: 200px;
-        }
-        .doc-table {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-        }
+        .search-input input { border: none; outline: none; font-size: 13px; color: #0f172a; background: transparent; width: 200px; }
+        .doc-table { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
         .doc-table-header {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr 100px;
@@ -118,75 +79,25 @@
         }
         .doc-row:last-child { border: none; }
         .doc-row:hover { background: #f8fafc; }
-        .doc-name {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .file-icon {
-            width: 36px;
-            height: 40px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-        .pdf { background: #fee2e2; color: #dc2626; }
-        .xlsx { background: #dcfce7; color: #16a34a; }
-        .img { background: #fef3c7; color: #d97706; }
+        .doc-name { display: flex; align-items: center; gap: 10px; }
+        .file-icon { width: 36px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+        .file-icon.pdf { background: #fee2e2; color: #dc2626; }
+        .file-icon.excel { background: #dcfce7; color: #16a34a; }
+        .file-icon.image { background: #fef3c7; color: #d97706; }
+        .file-icon.autre { background: #f1f5f9; color: #64748b; }
         .doc-info p { font-size: 13px; font-weight: 500; color: #0f172a; }
         .doc-info span { font-size: 11px; color: #64748b; }
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
-        }
+        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
         .badge-green { background: #dcfce7; color: #16a34a; }
         .badge-amber { background: #fef3c7; color: #d97706; }
-        .badge-blue { background: #dbeafe; color: #2563eb; }
-        .doc-actions {
-            display: flex;
-            gap: 6px;
-        }
-        .btn-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            cursor: pointer;
-            color: #64748b;
-            transition: all 0.15s;
-        }
+        .doc-actions { display: flex; gap: 6px; }
+        .btn-icon { width: 30px; height: 30px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; color: #64748b; transition: all 0.15s; }
         .btn-icon:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
-        .empty-state {
-            text-align: center;
-            padding: 48px 20px;
-            color: #64748b;
-        }
-        .empty-state i {
-            font-size: 48px;
-            color: #cbd5e1;
-            display: block;
-            margin-bottom: 16px;
-        }
-        .empty-state h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-        .empty-state p { font-size: 13px; }
+        .empty-state { text-align: center; padding: 48px 20px; color: #64748b; }
+        .empty-state i { font-size: 48px; color: #cbd5e1; display: block; margin-bottom: 16px; }
+        .empty-state h3 { font-size: 16px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+        .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 16px; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; border-radius: 8px; padding: 10px 16px; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -207,7 +118,7 @@
         </a>
         <a href="/documents" class="nav-item active">
             <i class="fa-solid fa-files"></i> Mes documents
-            <span class="nav-badge">0</span>
+            <span class="nav-badge" th:text="${nombreDocuments}">0</span>
         </a>
         <a href="/chat" class="nav-item">
             <i class="fa-solid fa-message"></i> Chat IA
@@ -229,7 +140,7 @@
     <div class="sidebar-stats">
         <div class="stat-mini">
             <span><i class="fa-solid fa-files"></i> Documents</span>
-            <b>0</b>
+            <b th:text="${nombreDocuments}">0</b>
         </div>
         <div class="stat-mini">
             <span><i class="fa-solid fa-users"></i> Utilisateurs</span>
@@ -243,7 +154,7 @@
     <div class="sidebar-user">
         <div class="avatar">AD</div>
         <div class="user-info">
-            <p th:text="${#authentication.getName()}">Admin</p>
+            <p>Admin</p>
             <span>Administrateur</span>
         </div>
     </div>
@@ -265,17 +176,31 @@
 
     <div class="page-body">
 
-        <!-- Zone upload -->
-        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <h3>Glissez vos fichiers ici</h3>
-            <p>Supporte PDF, Excel (.xlsx) et Images (PNG, JPG)</p>
-            <p style="font-size:12px; margin-top:4px;">Taille maximale : 50 MB par fichier</p>
-            <button class="btn-upload-trigger">
-                <i class="fa-solid fa-folder-open"></i> Parcourir les fichiers
-            </button>
-            <input type="file" id="fileInput" style="display:none" multiple accept=".pdf,.xlsx,.xls,.png,.jpg,.jpeg">
+        <!-- Alertes -->
+        <div class="alert-success" th:if="${success}">
+            <i class="fa-solid fa-circle-check"></i>
+            <span th:text="${success}"></span>
         </div>
+        <div class="alert-error" th:if="${error}">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span th:text="${error}"></span>
+        </div>
+
+        <!-- Zone upload -->
+        <form th:action="@{/documents/upload}" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <h3>Glissez vos fichiers ici</h3>
+                <p>Supporte PDF, Excel (.xlsx) et Images (PNG, JPG)</p>
+                <p style="font-size:12px; margin-top:4px;">Taille maximale : 50 MB par fichier</p>
+                <button type="button" class="btn-upload-trigger">
+                    <i class="fa-solid fa-folder-open"></i> Parcourir les fichiers
+                </button>
+                <input type="file" id="fileInput" name="fichier" style="display:none"
+                       accept=".pdf,.xlsx,.xls,.png,.jpg,.jpeg"
+                       onchange="document.getElementById('uploadForm').submit()">
+            </div>
+        </form>
 
         <!-- Filtres -->
         <div class="filters-bar">
@@ -299,8 +224,37 @@
                 <span>Actions</span>
             </div>
 
+            <!-- Liste des documents -->
+            <div th:each="doc : ${documents}">
+                <div class="doc-row">
+                    <div class="doc-name">
+                        <div th:class="${'file-icon ' + (doc.type == 'PDF' ? 'pdf' : (doc.type == 'EXCEL' ? 'excel' : (doc.type == 'IMAGE' ? 'image' : 'autre')))}">
+                            <i th:class="${doc.type == 'PDF' ? 'fa-solid fa-file-pdf' : (doc.type == 'EXCEL' ? 'fa-solid fa-file-excel' : (doc.type == 'IMAGE' ? 'fa-solid fa-image' : 'fa-solid fa-file'))}"></i>
+                        </div>
+                        <div class="doc-info">
+                            <p th:text="${doc.nom}">Nom du fichier</p>
+                            <span th:text="${#temporals.format(doc.createdAt, 'dd/MM/yyyy HH:mm')}">Date</span>
+                        </div>
+                    </div>
+                    <span th:text="${doc.type}">PDF</span>
+                    <span th:text="${doc.taille / 1024} + ' KB'">0 KB</span>
+                    <span class="badge badge-green">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span th:text="${doc.statut}">INDEXE</span>
+                    </span>
+                    <div class="doc-actions">
+                        <form th:action="@{/documents/supprimer/{id}(id=${doc.id})}" method="post">
+                            <button type="submit" class="btn-icon" title="Supprimer"
+                                    onclick="return confirm('Supprimer ce document ?')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Etat vide -->
-            <div class="empty-state">
+            <div class="empty-state" th:if="${#lists.isEmpty(documents)}">
                 <i class="fa-solid fa-folder-open"></i>
                 <h3>Aucun document uploade</h3>
                 <p>Commencez par uploader vos premiers documents PDF, Excel ou images.</p>
@@ -310,24 +264,11 @@
 </div>
 
 <script>
-    // Filtres
     document.querySelectorAll('.filter-tag').forEach(tag => {
         tag.addEventListener('click', () => {
             document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
             tag.classList.add('active');
         });
-    });
-
-    // Drag and drop
-    const uploadZone = document.querySelector('.upload-zone');
-    uploadZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadZone.style.borderColor = '#3b82f6';
-        uploadZone.style.background = '#eff6ff';
-    });
-    uploadZone.addEventListener('dragleave', () => {
-        uploadZone.style.borderColor = '#bfdbfe';
-        uploadZone.style.background = '#f8fafc';
     });
 </script>
 

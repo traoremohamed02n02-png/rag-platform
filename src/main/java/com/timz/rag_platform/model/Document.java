@@ -41,7 +41,9 @@ public class Document {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        this.statut = Statut.EN_ATTENTE;
+        if (this.statut == null) {
+            this.statut = Statut.INDEXE;
+        }
     }
 
     public enum Statut {
