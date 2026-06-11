@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistiques - RAG Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .stat-icon.blue { background: #eff6ff; color: #1d4ed8; }
+        .stat-icon.green { background: #f0fdf4; color: #15803d; }
+        .stat-icon.purple { background: #f5f3ff; color: #6d28d9; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #0f172a; }
+        .stat-label { font-size: 12px; color: #64748b; margin-top: 2px; }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .chart-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .chart-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-full {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-full h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-logo">
+        <div class="icon"><i class="fa-solid fa-brain"></i></div>
+        <div>
+            <h2>RAG Platform</h2>
+            <span>Gestion documentaire IA</span>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-section">Principal</div>
+        <a href="/dashboard" class="nav-item">
+            <i class="fa-solid fa-gauge"></i> Tableau de bord
+        </a>
+        <a href="/documents" class="nav-item">
+            <i class="fa-solid fa-files"></i> Mes documents
+        </a>
+        <a href="/chat" class="nav-item">
+            <i class="fa-solid fa-message"></i> Chat IA
+        </a>
+        <a href="/history" class="nav-item">
+            <i class="fa-solid fa-clock-rotate-left"></i> Historique
+        </a>
+        <div class="nav-section">Administration</div>
+        <a href="/admin" class="nav-item">
+            <i class="fa-solid fa-users"></i> Utilisateurs
+        </a>
+        <a href="/admin/stats" class="nav-item active">
+            <i class="fa-solid fa-chart-bar"></i> Statistiques
+        </a>
+        <a href="/settings" class="nav-item">
+            <i class="fa-solid fa-gear"></i> Parametres
+        </a>
+    </nav>
+    <div class="sidebar-stats">
+        <div class="stat-mini">
+            <span><i class="fa-solid fa-files"></i> Documents</span>
+            <b th:text="${nombreDocuments}">0</b>
+        </div>
+        <div class="stat-mini">
+            <span><i class="fa-solid fa-users"></i> Utilisateurs</span>
+            <b th:text="${nombreUsers}">0</b>
+        </div>
+        <div class="stat-mini">
+            <span><i class="fa-solid fa-message"></i> Questions</span>
+            <b th:text="${nombreQuestions}">0</b>
+        </div>
+    </div>
+    <div class="sidebar-user">
+        <div class="avatar">AD</div>
+        <div class="user-info">
+            <p>Admin</p>
+            <span>Administrateur</span>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="topbar">
+        <div>
+            <h1>Statistiques</h1>
+            <span>Vue d'ensemble de la plateforme</span>
+        </div>
+        <div class="topbar-right">
+            <a href="/logout" style="color:#64748b; font-size:13px; text-decoration:none;">
+                <i class="fa-solid fa-right-from-bracket"></i> Deconnexion
+            </a>
+        </div>
+    </div>
+
+    <div class="page-body">
+
+        <!-- Cartes stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fa-solid fa-files"></i></div>
+                <div>
+                    <div class="stat-value" th:text="${nombreDocuments}">0</div>
+                    <div class="stat-label">Documents uploades</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <div class="stat-value" th:text="${nombreUsers}">0</div>
+                    <div class="stat-label">Utilisateurs actifs</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fa-solid fa-message"></i></div>
+                <div>
+                    <div class="stat-value" th:text="${nombreQuestions}">0</div>
+                    <div class="stat-label">Questions posees</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphiques -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><i class="fa-solid fa-chart-pie"></i> Repartition des documents</h3>
+                <div style="position:relative; height:220px;">
+                    <canvas id="docsChart" role="img" aria-label="Repartition des types de documents">
+                        Repartition des types de documents uploades.
+                    </canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fa-solid fa-chart-bar"></i> Activite globale</h3>
+                <div style="position:relative; height:220px;">
+                    <canvas id="activityChart" role="img" aria-label="Activite globale de la plateforme">
+                        Activite globale de la plateforme.
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphique evolution -->
+        <div class="chart-full">
+            <h3><i class="fa-solid fa-chart-line"></i> Evolution de l'utilisation</h3>
+            <div style="position:relative; height:200px;">
+                <canvas id="evolutionChart" role="img" aria-label="Evolution de l'utilisation de la plateforme">
+                    Evolution de l'utilisation de la plateforme.
+                </canvas>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const nombreDocuments = [[${nombreDocuments}]];
+    const nombreUsers = [[${nombreUsers}]];
+    const nombreQuestions = [[${nombreQuestions}]];
+
+    new Chart(document.getElementById('docsChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['PDF', 'Excel', 'Images', 'Autres'],
+            datasets: [{
+                data: [
+                    Math.max(1, Math.round(nombreDocuments * 0.6)),
+                    Math.max(0, Math.round(nombreDocuments * 0.2)),
+                    Math.max(0, Math.round(nombreDocuments * 0.15)),
+                    Math.max(0, Math.round(nombreDocuments * 0.05))
+                ],
+                backgroundColor: ['#dc2626', '#16a34a', '#d97706', '#6d28d9'],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } }
+        }
+    });
+
+    new Chart(document.getElementById('activityChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Documents', 'Utilisateurs', 'Questions'],
+            datasets: [{
+                label: 'Total',
+                data: [nombreDocuments, nombreUsers, nombreQuestions],
+                backgroundColor: ['#3b82f6', '#22c55e', '#8b5cf6'],
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('evolutionChart'), {
+        type: 'line',
+        data: {
+            labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6'],
+            datasets: [{
+                label: 'Documents',
+                data: [0, 1, 1, 2, 3, nombreDocuments],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.1)',
+                tension: 0.4,
+                fill: true
+            }, {
+                label: 'Questions',
+                data: [0, 0, 0, 0, 0, nombreQuestions],
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139,92,246,0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

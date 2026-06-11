@@ -1,19 +1,27 @@
 package com.timz.rag_platform;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,7 +39,37 @@ public class SecurityConfig {
             .password(encoder.encode("user123"))
             .roles("USER")
             .build();
-        return new InMemoryUserDetailsManager(admin, user);
+        return new InMemoryUserDetailsManager(admin, user) {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                if (loginAttemptService.isBlocked(username)) {
+                    throw new UsernameNotFoundException("Compte bloque apres trop de tentatives.");
+                }
+                return super.loadUserByUsername(username);
+            }
+        };
+    }
+
+    @Bean
+    public AuthenticationFailureHandler failureHandler() {
+        return (request, response, exception) -> {
+            String username = request.getParameter("username");
+            loginAttemptService.loginFailed(username);
+            int remaining = loginAttemptService.getRemainingAttempts(username);
+            if (remaining == 0) {
+                response.sendRedirect("/login?blocked");
+            } else {
+                response.sendRedirect("/login?error&remaining=" + remaining);
+            }
+        };
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return (request, response, authentication) -> {
+            loginAttemptService.loginSucceeded(authentication.getName());
+            response.sendRedirect("/dashboard");
+        };
     }
 
     @Bean
@@ -44,13 +82,23 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/login?error")
+                .successHandler(successHandler())
+                .failureHandler(failureHandler())
                 .permitAll()
             )
             .logout(logout -> logout
                 .logoutSuccessUrl("/login")
                 .permitAll()
+            )
+            .headers(headers -> headers
+                .contentSecurityPolicy(csp -> csp
+                    .policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' cdnjs.cloudflare.com fonts.gstatic.com; img-src 'self' data:")
+                )
+                .frameOptions(frame -> frame.deny())
+                .httpStrictTransportSecurity(hsts -> hsts
+                    .includeSubDomains(true)
+                    .maxAgeInSeconds(31536000)
+                )
             );
         return http.build();
     }

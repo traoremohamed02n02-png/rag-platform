@@ -98,4 +98,23 @@ public class HomeController {
         }
         return "redirect:/admin";
     }
+    @GetMapping("/admin/stats")
+    public String stats(Model model) {
+        model.addAttribute("nombreDocuments", documentRepository.count());
+        model.addAttribute("nombreUsers", userRepository.count());
+        model.addAttribute("nombreQuestions", questionRepository.count());
+        return "stats";
+    }
+    @GetMapping("/settings")
+    public String settings() {
+    return "settings";
+    }
+    @GetMapping("/admin/users")
+    public String adminUsers(Model model) {
+        model.addAttribute("users", userService.getTousLesUsers());
+        model.addAttribute("nombreUsers", userRepository.count());
+        model.addAttribute("nombreDocuments", documentRepository.count());
+        model.addAttribute("nombreQuestions", questionRepository.count());
+        return "admin";
+    }
 }
